@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DesignPoint Studio | Студия дизайна интерьера</title>
+<meta name="description" content="DesignPoint Studio - профессиональный дизайн интерьера, мебельные туры, декорирование и реализация проектов">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 4rem;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #d4af37;
+}
+
+nav {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+nav a:hover {
+  color: #d4af37;
+}
+
+.cta-btn {
+  background: linear-gradient(135deg, #d4af37 0%, #aa8b2e 100%);
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 4rem;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/images/Hero.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(26, 26, 26, 0.4) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  color: #d4af37;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.section {
+  padding: 8rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #d4af37;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #d4af37;
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.portfolio-notice {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 12px;
+  border: 2px dashed rgba(212, 175, 55, 0.3);
+}
+
+.portfolio-notice h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.contact-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #d4af37;
+  margin-bottom: 1.5rem;
+}
+
+.contact-card a {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+  transition: color 0.3s;
+}
+
+.contact-card a:hover {
+  color: #d4af37;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.social-links a:hover {
+  background: #d4af37;
+  transform: translateY(-3px);
+}
+
+.social-links svg {
+  width: 24px;
+  height: 24px;
+  fill: #d4af37;
+}
+
+.social-links a:hover svg {
+  fill: #1a1a1a;
+}
+
+footer {
+  background: #0d0d0d;
+  padding: 3rem 4rem 2rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 2rem;
+  }
+  
+  nav {
+    display: none;
+  }
+  
+  .hero {
+    padding: 0 2rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+  
+  .section {
+    padding: 4rem 2rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">DesignPoint Studio</div>
+    <nav>
+      <a onclick="showPage('home')">Главная</a>
+      <a onclick="showPage('about')">О нас</a>
+      <a onclick="showPage('services')">Услуги</a>
+      <a onclick="showPage('portfolio')">Портфолио</a>
+      <a onclick="showPage('contact')">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<div id="home-page" class="page active">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>DesignPoint Studio</h1>
+      <p>Создаём интерьеры, в которых хочется жить. Профессиональный дизайн с душой и вниманием к деталям</p>
+      <div class="hero-buttons">
+        <a href="#" class="cta-btn" onclick="showPage('services'); return false;">Наши услуги</a>
+        <a href="#" class="cta-btn" onclick="showPage('contact'); return false;">Связаться с нами</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="about-page" class="page">
+  <section class="section">
+    <h2 class="section-title">О студии</h2>
+    <p class="section-subtitle">Профессионалы в создании уникальных пространств</p>
+    <div class="about-content">
+      <p>DesignPoint Studio — это команда талантливых дизайнеров интерьера с многолетним опытом создания уникальных пространств. Мы превращаем ваши мечты о идеальном доме в реальность.</p>
+      <p>Наш подход объединяет современные тренды, функциональность и индивидуальность каждого клиента. От концепции до реализации — мы сопровождаем вас на каждом этапе создания интерьера вашей мечты.</p>
+      <p>Мы специализируемся на жилых и коммерческих проектах, предлагая полный спектр услуг: от дизайн-проектов до декорирования, мебельных туров и ландшафтного дизайна.</p>
+    </div>
+  </section>
+</div>
+
+<div id="services-page" class="page">
+  <section class="section">
+    <h2 class="section-title">Наши услуги</h2>
+    <p class="section-subtitle">Полный спектр дизайнерских решений</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Дизайн-проект с реализацией</h3>
+        <p>Комплексный подход от концепции до воплощения. Мебельные пакеты, декорирование и авторский надзор</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛋️</div>
+        <h3>Каталог мебели</h3>
+        <p>Эксклюзивная мебель и декор. Столы, стулья, винтажные предметы и арт-объекты</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✈️</div>
+        <h3>Мебельные туры</h3>
+        <p>Организуем поездки к лучшим производителям мебели. Персональные маршруты и консультации</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Консультации</h3>
+        <p>Профессиональные гайды по дизайну, подбору материалов и планировке пространства</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <h3>Инвест-ремонт</h3>
+        <p>Ремонт под ключ с целью последующей продажи или сдачи в аренду. Максимизация инвестиционной привлекательности</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌳</div>
+        <h3>Ландшафтный проект</h3>
+        <p>Дизайн придомовой территории, террас и садов. Создаём гармоничное пространство снаружи</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="portfolio-page" class="page">
+  <section class="section">
+    <h2 class="section-title">Портфолио</h2>
+    <p class="section-subtitle">Наши реализованные проекты</p>
+    <div class="portfolio-notice">
+      <h3>🎨 Портфолио скоро появится</h3>
+      <p style="color: rgba(255,255,255,0.7); margin-top: 1rem;">Мы работаем над наполнением этого раздела. Свяжитесь с нами для просмотра наших работ</p>
+    </div>
+  </section>
+</div>
+
+<div id="contact-page" class="page">
+  <section class="section">
+    <h2 class="section-title">Контакты</h2>
+    <p class="section-subtitle">Свяжитесь с нами удобным способом</p>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Для клиентов</h3>
+        <a href="mailto:info@designpoint.studio">info@designpoint.studio</a>
+      </div>
+      <div class="contact-card">
+        <h3>Корпоративным клиентам</h3>
+        <a href="mailto:anelya@designpoint.studio">anelya@designpoint.studio</a>
+      </div>
+      <div class="contact-card">
+        <h3>Социальные сети</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/nelidesignpoint" target="_blank" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://t.me/desighpoint" target="_blank" title="Telegram">
+            <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="logo" style="margin-bottom: 1rem;">DesignPoint Studio</div>
+    <div class="copyright">
+      © 2025 DesignPoint Studio. Все права защищены
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page + '-page').classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
