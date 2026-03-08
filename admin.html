@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin | DesignPoint Studio</title>
+<script>
+(function(){
+  var pwd = localStorage.getItem('dp_admin');
+  if(pwd !== 'designpoint2026'){
+    pwd = prompt('Введите пароль:');
+    if(pwd !== 'designpoint2026'){
+      document.write('<h2 style="text-align:center;margin-top:40vh;font-family:Arial">Доступ запрещён</h2>');
+      document.close();
+    } else {
+      localStorage.setItem('dp_admin', pwd);
+    }
+  }
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --black: #1a1a1a; --gold: #c9a84c; --light: #f9f7f4; --gray: #666; --border: rgba(0,0,0,0.1); }
+body { font-family: 'Montserrat', sans-serif; background: var(--light); color: var(--black); min-height: 100vh; }
+header { background: var(--black); padding: 1.2rem 5%; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.4rem; letter-spacing: 0.05em; }
+.logo span { color: var(--gold); }
+.back-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.container { max-width: 680px; margin: 0 auto; padding: 3rem 5%; }
+h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+.subtitle { color: var(--gray); font-size: 0.9rem; margin-bottom: 2.5rem; }
+.form-card { background: #fff; padding: 2.5rem; box-shadow: 0 4px 30px rgba(0,0,0,0.06); }
+.form-group { margin-bottom: 1.8rem; }
+label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); margin-bottom: 0.6rem; }
+label span { color: var(--gold); }
+select, input, textarea { width: 100%; padding: 0.9rem 1rem; border: 1.5px solid var(--border); background: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.3s; appearance: none; -webkit-appearance: none; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1a1a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+.photo-upload { border: 2px dashed var(--border); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--light); position: relative; }
+.photo-upload:hover { border-color: var(--gold); }
+.photo-upload input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.photo-upload .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.photo-upload p { font-size: 0.85rem; color: var(--gray); }
+.photo-upload p strong { color: var(--black); }
+#photo-preview { max-width: 100%; max-height: 200px; margin-top: 1rem; display: none; object-fit: cover; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.checkbox-group { display: flex; align-items: center; gap: 0.8rem; }
+.checkbox-group input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--gold); cursor: pointer; }
+.checkbox-group label { margin: 0; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 0.9rem; }
+.btn-submit { width: 100%; padding: 1.1rem; background: var(--black); color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 1rem; }
+.btn-submit:hover { background: var(--gold); }
+.btn-submit:disabled { background: #999; cursor: not-allowed; }
+.status { padding: 1rem; margin-top: 1.5rem; font-size: 0.9rem; text-align: center; display: none; }
+.status.success { background: #d4edda; color: #155724; }
+.status.error { background: #f8d7da; color: #721c24; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+@media (max-width: 600px) { .row { grid-template-columns: 1fr; } .container { padding: 1.5rem 4%; } .form-card { padding: 1.5rem; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Design<span>Point</span> <span style="color:rgba(255,255,255,0.4);font-size:0.9rem;font-family:Montserrat">Admin</span></div>
+  <a href="shop.html" class="back-link">← Каталог</a>
+</header>
+<div class="container">
+  <h1>Новая карточка</h1>
+  <p class="subtitle">Заполните форму — письмо придёт автоматически</p>
+  <div class="form-card">
+    <div class="form-group">
+      <label>Раздел каталога <span>*</span></label>
+      <select id="section" onchange="updateSubcategory()">
+        <option value="">— выберите раздел —</option>
+        <option value="Гостиная">Гостиная / Living Room</option>
+        <option value="Спальня">Спальня / Bedroom</option>
+        <option value="Уличная">Уличная мебель / Outdoor</option>
+        <option value="Текстиль">Текстиль / Textile</option>
+        <option value="Корпусная">Корпусная мебель / Cabinet</option>
+        <option value="Освещение">Освещение / Lighting</option>
+        <option value="Декор">Декор / Decor</option>
+        <option value="Ванная">Ванная / Bath</option>
+        <option value="Отделка">Отделочные материалы / Finishing</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Подкатегория <span>*</span></label>
+      <select id="subcategory">
+        <option value="">— сначала выберите раздел —</option>
+      </select>
+    </div>
+    <hr class="divider">
+    <div class="form-group">
+      <label>Название товара <span>*</span></label>
+      <input type="text" id="product_name" placeholder="Например: Velvet Cloud Sofa">
+    </div>
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea id="description" placeholder="Материал, размеры, цвета, особенности..."></textarea>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>Цена (฿) <span>*</span></label>
+        <input type="text" id="price" placeholder="95,000">
+      </div>
+      <div class="form-group">
+        <label>Скидка</label>
+        <input type="text" id="sale" placeholder="Например: -15%">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="checkbox-group">
+        <input type="checkbox" id="is_new">
+        <label for="is_new">Пометить как NEW 2026</label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="form-group">
+      <label>Фото товара <span>*</span></label>
+      <div class="photo-upload">
+        <input type="file" id="photo_file" accept="image/*" onchange="previewPhoto(this)">
+        <div class="icon">📷</div>
+        <p><strong>Нажмите чтобы выбрать фото</strong></p>
+        <p>С телефона, WhatsApp, Telegram — любое фото</p>
+        <img id="photo-preview" alt="preview">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Или вставьте ссылку на фото</label>
+      <input type="text" id="photo_url" placeholder="https://...">
+    </div>
+    <button class="btn-submit" onclick="sendForm()" id="submit-btn">
+      Отправить карточку →
+    </button>
+    <div class="status" id="status"></div>
+  </div>
+</div>
+<script>
+emailjs.init('yX3ozJijC1GVm60pQ');
+
+const subcategories = {
+  'Гостиная': ['Диваны', 'Кресла', 'Столы обеденные', 'Столы журнальные', 'Стулья', 'Барные стулья', 'TV тумбы', 'Буфеты', 'Консоли'],
+  'Спальня': ['Кровати', 'Тумбы прикроватные', 'Диваны', 'Кресла', 'Столы журнальные', 'Пуфики', 'Комоды', 'Сейфы'],
+  'Уличная': ['Качели', 'Диваны', 'Кресла', 'Столы журнальные', 'Комоды', 'Лежаки', 'Столы обеденные', 'Стулья', 'Зонты'],
+  'Текстиль': ['Шторы', 'Покрывала и подушки', 'Ковры'],
+  'Корпусная': ['Кухни', 'Шкафы', 'Гардеробные'],
+  'Освещение': ['Люстры', 'Бра', 'Настольные лампы', 'Уличные светильники', 'Освещение для ванны'],
+  'Декор': ['Картины / ART', 'Посуда', 'Винтаж'],
+  'Ванная': ['Раковины', 'Ванны', 'Смесители'],
+  'Отделка': ['Обои декоративные', 'Стеклоблоки', 'Декоративные панели', 'Декоративная плитка']
+};
+
+function updateSubcategory() {
+  const section = document.getElementById('section').value;
+  const sub = document.getElementById('subcategory');
+  sub.innerHTML = '<option value="">— выберите подкатегорию —</option>';
+  if (subcategories[section]) {
+    subcategories[section].forEach(s => {
+      sub.innerHTML += '<option value="' + s + '">' + s + '</option>';
+    });
+  }
+}
+
+function previewPhoto(input) {
+  const preview = document.getElementById('photo-preview');
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function sendForm() {
+  const section = document.getElementById('section').value;
+  const subcategory = document.getElementById('subcategory').value;
+  const product_name = document.getElementById('product_name').value;
+  const description = document.getElementById('description').value;
+  const price = document.getElementById('price').value;
+  const sale = document.getElementById('sale').value;
+  const is_new = document.getElementById('is_new').checked ? 'Да' : 'Нет';
+  const photo_url = document.getElementById('photo_url').value || '(фото загружено в письме)';
+
+  if (!section || !subcategory || !product_name || !price) {
+    showStatus('Заполните обязательные поля: раздел, подкатегория, название, цена', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+
+  emailjs.send('service_5s8jcf7', 'template_mn17757', {
+    section, subcategory, product_name, description, price, sale, is_new, photo_url
+  }).then(() => {
+    showStatus('Карточка отправлена! Письмо улетело на почту ✓', 'success');
+    btn.textContent = 'Отправить ещё одну';
+    btn.disabled = false;
+    document.getElementById('section').value = '';
+    document.getElementById('subcategory').innerHTML = '<option value="">— сначала выберите раздел —</option>';
+    document.getElementById('product_name').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('sale').value = '';
+    document.getElementById('is_new').checked = false;
+    document.getElementById('photo_url').value = '';
+    document.getElementById('photo-preview').style.display = 'none';
+  }).catch(err => {
+    showStatus('Ошибка отправки. Попробуйте ещё раз.', 'error');
+    btn.disabled = false;
+    btn.textContent = 'Отправить карточку →';
+    console.error(err);
+  });
+}
+
+function showStatus(msg, type) {
+  const s = document.getElementById('status');
+  s.textContent = msg;
+  s.className = 'status ' + type;
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 5000);
+}
+</script>
+</body>
+</html>
