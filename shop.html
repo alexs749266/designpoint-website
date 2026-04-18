@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/jpeg" href="favicon.jpg">
+<link rel="apple-touch-icon" href="favicon.jpg">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Каталог 2026 | DesignPoint Studio Phuket</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -182,5 +184,11 @@ function filterProducts(category, btn) {
   document.querySelectorAll('.section-header[data-group="' + category + '"]').forEach(function(h){ h.style.display = ''; });
 }
 </script>
+
+<button onclick="document.querySelector('.categories-section').scrollIntoView({behavior:'smooth'})" 
+style="position:fixed;bottom:2rem;right:1.5rem;z-index:999;background:#1a1a1a;color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:background 0.3s;"
+onmouseover="this.style.background='#c9a84c'" onmouseout="this.style.background='#1a1a1a'">
+↑
+</button>
 </body>
 </html>
