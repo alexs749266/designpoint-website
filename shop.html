@@ -201,5 +201,20 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<div style="position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid rgba(0,0,0,0.08);display:flex;overflow-x:auto;z-index:999;padding:0.5rem 0.3rem;gap:0.3rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+  <style>.bnav-btn{flex-shrink:0;padding:0.5rem 0.8rem;background:transparent;border:1.5px solid #1a1a1a;color:#1a1a1a;font-family:Montserrat,sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all 0.2s;border-radius:2px;} .bnav-btn:hover,.bnav-btn.active{background:#1a1a1a;color:#fff;} .bnav-btn.gold{border-color:#c9a84c;color:#c9a84c;} .bnav-btn.gold:hover{background:#c9a84c;color:#fff;}</style>
+  <button class="bnav-btn gold" onclick="filterProducts('all',this)">Все</button>
+  <button class="bnav-btn" onclick="filterProducts('living',this)">🛋 Гостиная</button>
+  <button class="bnav-btn" onclick="filterProducts('bedroom',this)">🛏 Спальня</button>
+  <button class="bnav-btn" onclick="filterProducts('outdoor',this)">🌿 Уличная</button>
+  <button class="bnav-btn" onclick="filterProducts('textile',this)">🧵 Текстиль</button>
+  <button class="bnav-btn" onclick="filterProducts('lighting',this)">💡 Свет</button>
+  <button class="bnav-btn" onclick="filterProducts('decor',this)">🎨 Декор</button>
+  <button class="bnav-btn" onclick="filterProducts('bath',this)">🛁 Ванная</button>
+  <button class="bnav-btn" onclick="filterProducts('cabinet',this)">🪵 Корпусная</button>
+  <button class="bnav-btn" onclick="filterProducts('finishing',this)">🪟 Отделка</button>
+</div>
+<div style="height:60px"></div>
 </body>
 </html>
