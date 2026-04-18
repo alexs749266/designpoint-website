@@ -190,5 +190,16 @@ style="position:fixed;bottom:2rem;right:1.5rem;z-index:999;background:#1a1a1a;co
 onmouseover="this.style.background='#c9a84c'" onmouseout="this.style.background='#1a1a1a'">
 ↑
 </button>
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat) {
+        const btn = document.querySelector('.cat-btn[onclick*="' + cat + '"]');
+        if (btn) btn.click();
+    }
+});
+</script>
 </body>
 </html>
