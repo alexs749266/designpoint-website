@@ -536,6 +536,33 @@ body::before {
   </div>
 </div>
 
+<!-- PAGE: ИЗБРАННОЕ -->
+<div class="page" id="page-favorites">
+  <div style="padding:100px 1.2rem 2rem;text-align:center;">
+    <div class="section-title" style="justify-content:center;margin-bottom:0.4rem;">Избранное</div>
+    <div class="section-sub" style="margin-bottom:3rem;text-align:center;">Сохранённые товары</div>
+    <svg style="width:60px;height:60px;stroke:var(--silver2);fill:none;stroke-width:1;margin-bottom:1.5rem;" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;margin-bottom:0.8rem;">Пока пусто</div>
+    <div style="font-size:0.75rem;color:var(--silver2);letter-spacing:0.1em;margin-bottom:2rem;">Нажмите ♡ на товаре чтобы сохранить</div>
+    <button class="hero-btn" onclick="showPage('catalog')" style="margin:0 auto;display:inline-flex;">Перейти в каталог →</button>
+  </div>
+</div>
+
+<!-- PAGE: ПОИСК -->
+<div class="page" id="page-search">
+  <div style="padding:100px 1.2rem 2rem;">
+    <div class="section-title" style="margin-bottom:0.4rem;">Поиск</div>
+    <div class="section-sub" style="margin-bottom:1.5rem;">Найти товар</div>
+    <div style="position:relative;margin-bottom:2rem;">
+      <input id="search-input" type="text" placeholder="Диван, кровать, люстра..." 
+        oninput="doSearch(this.value)"
+        style="width:100%;padding:1rem 3rem 1rem 1rem;background:var(--bg3);border:1px solid var(--border);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.9rem;outline:none;">
+      <svg style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--silver2);fill:none;stroke-width:1.5;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </div>
+    <div id="search-results" style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;"></div>
+  </div>
+</div>
+
 <!-- PAGE: КОНТАКТ -->
 <div class="page" id="page-contact">
   <div style="padding:100px 1.2rem 2rem;">
@@ -572,17 +599,29 @@ body::before {
 </div>
 
 <!-- BOTTOM NAV -->
+<style>
+.nav-svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; margin-bottom:0.2rem; transition: all 0.3s; }
+.nav-item.active .nav-svg { stroke: var(--silver); filter: drop-shadow(0 0 6px rgba(200,214,224,0.6)); }
+</style>
 <nav class="bottom-nav">
   <button class="nav-item active" onclick="showPage('home')" id="nav-home">
-    <div class="nav-icon">🏠</div>
+    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
     <div class="nav-label">Главная</div>
   </button>
   <button class="nav-item" onclick="showPage('catalog')" id="nav-catalog">
-    <div class="nav-icon">📦</div>
+    <svg class="nav-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg>
     <div class="nav-label">Каталог</div>
   </button>
+  <button class="nav-item" onclick="showPage('favorites')" id="nav-favorites">
+    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    <div class="nav-label">Избранное</div>
+  </button>
+  <button class="nav-item" onclick="showPage('search')" id="nav-search">
+    <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <div class="nav-label">Поиск</div>
+  </button>
   <button class="nav-item" onclick="showPage('contact')" id="nav-contact">
-    <div class="nav-icon">✉️</div>
+    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     <div class="nav-label">Контакт</div>
   </button>
 </nav>
@@ -599,6 +638,39 @@ function showPage(name) {
   document.getElementById('page-' + name).classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
   window.scrollTo(0,0);
+  if(name === 'search') setTimeout(() => document.getElementById('search-input').focus(), 300);
+}
+
+const allProducts = [
+  {name:'Velvet Cloud Sofa', cat:'Гостиная', price:'฿95,000', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300', section:'living'},
+  {name:'Marble Dining Table', cat:'Гостиная', price:'฿76,500', img:'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=300', section:'living'},
+  {name:'Boucle King Bed', cat:'Спальня', price:'฿112,000', img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300', section:'bedroom'},
+  {name:'Crystal Chandelier', cat:'Освещение', price:'฿138,000', img:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=300', section:'lighting'},
+  {name:'Rattan Swing Chair', cat:'Уличная', price:'฿32,000', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300', section:'outdoor'},
+  {name:'Moroccan Wool Rug', cat:'Текстиль', price:'฿36,000', img:'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=300', section:'textile'},
+  {name:'Freestanding Stone Bath', cat:'Ванная', price:'฿145,000', img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=300', section:'bath'},
+  {name:'Abstract Gold Canvas', cat:'Декор', price:'฿28,000', img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300', section:'decor'},
+  {name:'Marble Floor Lamp', cat:'Освещение', price:'฿14,200', img:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=300', section:'lighting'},
+  {name:'Teak Garden Sofa', cat:'Уличная', price:'฿68,000', img:'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=300', section:'outdoor'},
+];
+
+function doSearch(q) {
+  const res = document.getElementById('search-results');
+  if(!q || q.length < 2) { res.innerHTML = ''; return; }
+  const found = allProducts.filter(p => 
+    p.name.toLowerCase().includes(q.toLowerCase()) || 
+    p.cat.toLowerCase().includes(q.toLowerCase())
+  );
+  if(!found.length) { res.innerHTML = '<div style="grid-column:span 2;text-align:center;color:var(--silver2);padding:2rem;font-size:0.85rem;">Ничего не найдено</div>'; return; }
+  res.innerHTML = found.map(p => `
+    <div onclick="openCatalog('${p.section}')" style="background:var(--bg3);border:1px solid var(--border);overflow:hidden;cursor:pointer;">
+      <img src="${p.img}" style="width:100%;aspect-ratio:1;object-fit:cover;filter:brightness(0.8);">
+      <div style="padding:0.7rem;">
+        <div style="font-size:0.6rem;color:var(--silver);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.2rem;">${p.cat}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.95rem;margin-bottom:0.3rem;">${p.name}</div>
+        <div style="font-size:0.75rem;font-weight:600;color:var(--silver2);">${p.price}</div>
+      </div>
+    </div>`).join('');
 }
 
 function openCatalog(cat) {
